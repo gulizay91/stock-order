@@ -1,0 +1,35 @@
+﻿services:
+  #  swagger-ui:
+  #    image: swaggerapi/swagger-ui
+  #    container_name: swagger_ui_container
+  #    ports:
+  #      - "80:80"
+  #    volumes:
+  #      - ./doc:/usr/share/nginx/html/doc
+  #    environment:
+  #      API_URL: http://0.0.0.0:5112/swagger.json
+  sql-data:
+    image: "mcr.microsoft.com/azure-sql-edge"
+    ports:
+      - "1433:1433"
+    container_name: sqlserver
+    environment:
+      MSSQL_USER: "sa"
+      MSSQL_DB: "stock-order"
+      MSSQL_SA_PASSWORD: "P@ssw0rd123!"
+      ACCEPT_EULA: "1"
+  order.api:
+    image: order.api
+    build:
+      context: .
+      dockerfile: src/Order.Api/Dockerfile
+    ports:
+      - "5112:80"
+      - "7120:81"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings_Default=Server=sql-data;Database=stock-order;User Id=sa;Password=P@ssw0rd123!;TrustServerCertificate=True;
+      - ConnectionStrings_UseInMemory=false
+    depends_on:
+      #      - swagger-ui
+      - sql-data
