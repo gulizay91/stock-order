@@ -15,7 +15,7 @@ public static class HealthCheckRegister
       });
     });
 
-    //for readiness probe - mongodb & masstransit. 
+    //for readiness probe - masstransit. 
     //note: masstransit's health check tags - masstransit, ready.
     applicationBuilder.UseEndpoints(endpoints =>
     {

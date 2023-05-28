@@ -1,10 +1,11 @@
 using System.Net.Mime;
 using System.Text.Json;
-using FluentValidation.Results;
 using Mapster;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Order.Api.Middlewares.MiddlewareModels;
 using Order.Api.Persistence.Repositories;
+using Order.Api.Services;
 using Order.Api.V1.Exchanges.Requests;
 using Order.Api.V1.Exchanges.Responses;
 using Swashbuckle.AspNetCore.Annotations;
@@ -21,12 +22,15 @@ namespace Order.Api.V1.Controllers;
 public class OrderController : ControllerBase
 {
   private readonly ILogger<OrderController> _logger;
+  private readonly INotificationService _notificatiponService;
   private readonly IOrderRepository _orderRepository;
 
-  public OrderController(ILogger<OrderController> logger, IOrderRepository orderRepository)
+  public OrderController(ILogger<OrderController> logger, IOrderRepository orderRepository,
+    INotificationService notificatiponService)
   {
     _logger = logger;
     _orderRepository = orderRepository;
+    _notificatiponService = notificatiponService;
   }
 
   [HttpGet]
@@ -49,6 +53,8 @@ public class OrderController : ControllerBase
     _logger.LogInformation(JsonSerializer.Serialize(request));
     var newOrder = request.Adapt<Persistence.Entities.Order>();
     var response = await _orderRepository.InsertOrder(newOrder);
+    foreach (var orderNotification in response.OrderNotifications)
+      await _notificatiponService.PublishOrderNotificationEvent(orderNotification, response.Id);
     return Created(new Uri(response.Id.ToString(), UriKind.Relative), response.Adapt<CreateOrderResponse>());
   }
 

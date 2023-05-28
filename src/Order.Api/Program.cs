@@ -40,6 +40,7 @@ void RegisterServices(IServiceCollection serviceCollection, IConfiguration confi
   serviceCollection.RegisterRepositories(configurationRoot);
   serviceCollection.RegisterMappers();
   serviceCollection.RegisterControllers();
+  serviceCollection.RegisterMassTransit(configurationRoot);
 
   serviceCollection.AddHostedService<ApplicationLifetimeService>();
 }

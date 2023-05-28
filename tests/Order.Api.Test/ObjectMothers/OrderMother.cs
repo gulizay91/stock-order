@@ -51,6 +51,14 @@ public static class OrderMother
     };
   }
 
+  public static OrderNotification SimpleOrderNotificationSms()
+  {
+    return new OrderNotification
+    {
+      NotificationType = NotificationType.Sms
+    };
+  }
+
   public static List<OrderNotification> SimpleOrderNotifications()
   {
     return new List<OrderNotification>

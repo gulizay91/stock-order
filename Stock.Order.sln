@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.Consumer", "src\Notification.Consumer\Notification.Consumer.csproj", "{2BCC06AE-F2E5-4681-B61D-149CE489BB3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Contracts\Contracts.csproj", "{65E4C9EA-CE8D-4EDF-8206-B33EA53ADA08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +27,13 @@ Global
 		{FB9FB54A-32D9-4F79-9783-B43A07F5BE54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB9FB54A-32D9-4F79-9783-B43A07F5BE54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB9FB54A-32D9-4F79-9783-B43A07F5BE54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BCC06AE-F2E5-4681-B61D-149CE489BB3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BCC06AE-F2E5-4681-B61D-149CE489BB3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BCC06AE-F2E5-4681-B61D-149CE489BB3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BCC06AE-F2E5-4681-B61D-149CE489BB3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65E4C9EA-CE8D-4EDF-8206-B33EA53ADA08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65E4C9EA-CE8D-4EDF-8206-B33EA53ADA08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65E4C9EA-CE8D-4EDF-8206-B33EA53ADA08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65E4C9EA-CE8D-4EDF-8206-B33EA53ADA08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

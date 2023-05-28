@@ -1,10 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 
-ENV ASPNETCORE_ENVIRONMENT=Development
-ENV ConnectionStrings_Default=Server=sql-data;Database=stock-order;User Id=sa;Password=P@ssw0rd123!;TrustServerCertificate=True;
-ENV ConnectionStrings_UseInMemory=false
-
 EXPOSE 80
 #EXPOSE 443
 

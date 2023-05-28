@@ -2,7 +2,9 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Order.Api.Persistence.Entities;
 using Order.Api.Persistence.Repositories;
+using Order.Api.Services;
 using Order.Api.Test.ObjectMothers;
 using Order.Api.V1.Controllers;
 using SystemTextJsonPatch;
@@ -11,16 +13,17 @@ namespace Order.Api.Test.ControllerTests;
 
 public class OrderControllerTest
 {
-  private readonly Mock<ILogger<OrderController>> _logger;
+  private readonly Mock<ILogger<OrderController>> _mockLogger;
+  private readonly Mock<INotificationService> _mockNotificationService;
   private readonly Mock<IOrderRepository> _mockOrderRepository;
   private readonly OrderController _sut;
 
-
   public OrderControllerTest()
   {
-    _logger = new Mock<ILogger<OrderController>>();
+    _mockLogger = new Mock<ILogger<OrderController>>();
     _mockOrderRepository = new Mock<IOrderRepository>();
-    _sut = new OrderController(_logger.Object, _mockOrderRepository.Object);
+    _mockNotificationService = new Mock<INotificationService>();
+    _sut = new OrderController(_mockLogger.Object, _mockOrderRepository.Object, _mockNotificationService.Object);
   }
 
   [Fact]
@@ -51,6 +54,9 @@ public class OrderControllerTest
 
     // Assert
     result.StatusCode.Should().Be(201);
+    _mockNotificationService.Verify(
+      context => context.PublishOrderNotificationEvent(It.IsAny<OrderNotification>(), It.IsAny<int>()),
+      Times.Exactly(simpleRequest.OrderNotifications.Count()));
   }
 
   [Fact]

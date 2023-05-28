@@ -8,7 +8,7 @@ Order to buy Bitcoin regularly on a certain day of each month
 * Packages: FluentValidation, Mapster, SystemTextJsonPatch
 * MessageBroker: RabbitMQ
 * ServiceBus: MassTransit
-* UnitTest : XUnit
+* UnitTest : XUnit, Moq
 
 ## Requirements
 * The user can give orders for the 1-28 days of the month.
@@ -26,6 +26,13 @@ Order to buy Bitcoin regularly on a certain day of each month
   Channel should be informed. At this point, an imaginary http for the notification process
   Sampling is expected upon request.
 * Every notification should be logged at the database level. It should be possible to answer the questions of which order was made on which channel, when and with which information letter.
+
+
+## System Design
+![system design](https://github.com/gulizay91/stock-order/blob/main/etc/system-design.png?raw=true)
+
+![sample data order](https://github.com/gulizay91/stock-order/blob/main/etc/ss-sql-1.png?raw=true)
+![sample data orderNotification](https://github.com/gulizay91/stock-order/blob/main/etc/ss-sql-2.png?raw=true)
 
 
 ### Startup Projects

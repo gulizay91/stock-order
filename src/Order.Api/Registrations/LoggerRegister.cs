@@ -9,6 +9,6 @@ public static class LoggerRegister
     var defaultLogLevel = configuration.GetSection("Logging:LogLevel:Default").Value.ToEnum(LogLevel.Error);
     Console.Out.WriteLine($"Console:LogLevel:Default: {defaultLogLevel}");
     serviceCollection.AddLogging(loggingBuilder => loggingBuilder
-      .SetMinimumLevel(LogLevel.Debug));
+      .SetMinimumLevel(defaultLogLevel));
   }
 }
