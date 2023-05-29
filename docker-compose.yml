@@ -15,16 +15,16 @@
       #      MSSQL_DB: "stock-order"
       MSSQL_SA_PASSWORD: "P@ssw0rd123!"
       ACCEPT_EULA: "1"
-  #  sql-notification:
-  #    image: "mcr.microsoft.com/azure-sql-edge"
-  #    ports:
-  #      - "1434:1433"
-  #    container_name: sqlserver-stock-notification
-  #    environment:
-  #      MSSQL_USER: "sa"
-  #      MSSQL_DB: "stock-notification"
-  #      MSSQL_SA_PASSWORD: "P@ssw0rd123!"
-  #      ACCEPT_EULA: "1"
+  sql-notification:
+    image: "mcr.microsoft.com/azure-sql-edge"
+    ports:
+      - "1434:1433"
+    container_name: sqlserver-stock-notification
+    environment:
+      MSSQL_USER: "sa"
+      #      MSSQL_DB: "stock-notification"
+      MSSQL_SA_PASSWORD: "P@ssw0rd123!"
+      ACCEPT_EULA: "1"
   order.api:
     image: order.api
     build:
@@ -57,5 +57,5 @@
       - BusSettings__Password=guest
     depends_on:
       - rabbitmq
-      - sql-order
-#      - sql-notification
+      #- sql-order
+      - sql-notification

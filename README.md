@@ -74,10 +74,18 @@ docker-compose up
 Once done, run the Docker image and map the port to whatever you wish on
 your host.
 
-You can check data
+You can check data separeted db
 
+db: stock-order
 ```
 Server Name: localhost,1433
+SqlServer
+    UserName: sa
+    Password: P@ssw0rd123!
+```
+db: stock-notification
+```
+Server Name: localhost,1434
 SqlServer
     UserName: sa
     Password: P@ssw0rd123!
