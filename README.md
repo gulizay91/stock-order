@@ -40,6 +40,10 @@ Order to buy Bitcoin regularly on a certain day of each month
 * Notification.Consumer
 
 ## Docker
+if you need rabbitmq on docker
+```sh
+docker run -d --hostname rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
 if you need mssql on docker in macos
 ```sh
 docker pull mcr.microsoft.com/azure-sql-edge
