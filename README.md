@@ -74,7 +74,7 @@ docker-compose up
 Once done, run the Docker image and map the port to whatever you wish on
 your host.
 
-You can check data separeted db
+You can check data separated db
 
 db: stock-order
 ```
