@@ -4,5 +4,5 @@ namespace Order.Api.Services;
 
 public interface INotificationService
 {
-  Task PublishOrderNotificationEvent(OrderNotification orderNotification, int orderId);
+  Task PublishOrderNotificationEvent(OrderNotification orderNotification, int orderId, int clientId);
 }

@@ -51,10 +51,10 @@ public class OrderController : ControllerBase
   public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
   {
     _logger.LogInformation(JsonSerializer.Serialize(request));
-    var newOrder = request.Adapt<Persistence.Entities.Order>();
-    var response = await _orderRepository.InsertOrder(newOrder);
+    var createOrder = request.Adapt<Persistence.Entities.Order>();
+    var response = await _orderRepository.InsertOrder(createOrder);
     foreach (var orderNotification in response.OrderNotifications)
-      await _notificatiponService.PublishOrderNotificationEvent(orderNotification, response.Id);
+      await _notificatiponService.PublishOrderNotificationEvent(orderNotification, response.Id, createOrder.ClientId);
     return Created(new Uri(response.Id.ToString(), UriKind.Relative), response.Adapt<CreateOrderResponse>());
   }
 

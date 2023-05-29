@@ -12,9 +12,9 @@ public sealed class OrderDatabaseContext : DbContext
     Database.EnsureCreated();
   }
 
-  public DbSet<Entities.Order> Order { get; set; }
+  public DbSet<Entities.Order> Order { get; set; } = null!;
 
-  public DbSet<OrderNotification> OrderNotification { get; set; }
+  public DbSet<OrderNotification> OrderNotification { get; set; } = null!;
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
@@ -27,7 +27,7 @@ public sealed class OrderDatabaseContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<Entities.Order>().HasKey(t => t.Id);
-    modelBuilder.Entity<Entities.Order>().Property(t => t.ClientId);
+    modelBuilder.Entity<Entities.Order>().HasIndex(t => t.ClientId);
     modelBuilder.Entity<Entities.Order>().Property(t => t.OrderType).HasConversion<string>().IsRequired();
     modelBuilder.Entity<Entities.Order>().Property(t => t.Price).IsRequired();
     modelBuilder.Entity<Entities.Order>().Property(t => t.DayOfMonth).IsRequired();

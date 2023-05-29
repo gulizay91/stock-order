@@ -33,7 +33,8 @@ void ConfigureServices(HostBuilderContext hostContext, IServiceCollection servic
 {
   services.RegisterLoggers(hostContext.Configuration);
   services.RegisterMassTransit(hostContext.Configuration);
-  //services.RegisterHttpClients(hostContext.Configuration);
+  services.RegisterRepositories(hostContext.Configuration);
+  services.RegisterHttpClients();
 
   services.Configure<HostOptions>(opts => opts.ShutdownTimeout = TimeSpan.FromSeconds(45));
 }

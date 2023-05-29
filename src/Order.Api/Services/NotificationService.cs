@@ -17,22 +17,26 @@ public class NotificationService : INotificationService
     _bus = bus;
   }
 
-  public async Task PublishOrderNotificationEvent(OrderNotification orderNotification, int orderId)
+  public async Task PublishOrderNotificationEvent(OrderNotification orderNotification, int orderId, int clientId)
   {
     var cancelationToken = new CancellationTokenSource(MessagePublishCancellationTokenTimeout);
 
     switch (orderNotification.NotificationType)
     {
       case NotificationType.Sms:
-        await _bus.Publish(new OrderCreatedSmsEvent { OrderId = orderId, CorrelationId = Guid.NewGuid() },
+        await _bus.Publish(
+          new OrderCreatedSmsEvent { OrderId = orderId, ClientId = clientId, CorrelationId = Guid.NewGuid() },
           cancelationToken.Token);
         break;
       case NotificationType.Email:
-        await _bus.Publish(new OrderCreatedEmailEvent { OrderId = orderId, CorrelationId = Guid.NewGuid() },
+        await _bus.Publish(
+          new OrderCreatedEmailEvent { OrderId = orderId, ClientId = clientId, CorrelationId = Guid.NewGuid() },
           cancelationToken.Token);
         break;
       case NotificationType.PushNotification:
-        await _bus.Publish(new OrderCreatedPushNotificationEvent { OrderId = orderId, CorrelationId = Guid.NewGuid() },
+        await _bus.Publish(
+          new OrderCreatedPushNotificationEvent
+            { OrderId = orderId, ClientId = clientId, CorrelationId = Guid.NewGuid() },
           cancelationToken.Token);
         break;
       default:
@@ -41,6 +45,6 @@ public class NotificationService : INotificationService
     }
 
     _logger.LogInformation(
-      $"Published Message for Order: {orderNotification.Id}, channel: {orderNotification.NotificationType}");
+      $"Published Message for Order: {orderId}, channel: {orderNotification.NotificationType}");
   }
 }

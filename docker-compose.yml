@@ -1,23 +1,30 @@
 ﻿services:
-  #  swagger-ui:
-  #    image: swaggerapi/swagger-ui
-  #    container_name: swagger_ui_container
-  #    ports:
-  #      - "80:80"
-  #    volumes:
-  #      - ./doc:/usr/share/nginx/html/doc
-  #    environment:
-  #      API_URL: http://0.0.0.0:5112/swagger.json
-  sql-data:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-stock-order
+    ports:
+      - 5672:5672
+      - 15672:15672
+  sql-order:
     image: "mcr.microsoft.com/azure-sql-edge"
     ports:
       - "1433:1433"
-    container_name: sqlserver
+    container_name: sqlserver-stock-order
     environment:
       MSSQL_USER: "sa"
-      MSSQL_DB: "stock-order"
+      #      MSSQL_DB: "stock-order"
       MSSQL_SA_PASSWORD: "P@ssw0rd123!"
       ACCEPT_EULA: "1"
+  #  sql-notification:
+  #    image: "mcr.microsoft.com/azure-sql-edge"
+  #    ports:
+  #      - "1434:1433"
+  #    container_name: sqlserver-stock-notification
+  #    environment:
+  #      MSSQL_USER: "sa"
+  #      MSSQL_DB: "stock-notification"
+  #      MSSQL_SA_PASSWORD: "P@ssw0rd123!"
+  #      ACCEPT_EULA: "1"
   order.api:
     image: order.api
     build:
@@ -28,8 +35,27 @@
       - "7120:81"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings_Default=Server=sql-data;Database=stock-order;User Id=sa;Password=P@ssw0rd123!;TrustServerCertificate=True;
-      - ConnectionStrings_UseInMemory=false
+      - ConnectionStrings__Default=Server=sql-order;Database=stock-order;User Id=sa;Password=P@ssw0rd123!;TrustServerCertificate=True;
+      - ConnectionStrings__UseInMemory=false
+      - BusSettings__ClusterAddress=amqps://rabbitmq:5672/
+      - BusSettings__UserName=guest
+      - BusSettings__Password=guest
     depends_on:
-      #      - swagger-ui
-      - sql-data
+      - sql-order
+      - rabbitmq
+  notification.consumer:
+    image: notification.consumer
+    build:
+      context: .
+      dockerfile: src/Notification.Consumer/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Server=sql-notification;Database=stock-notification;User Id=sa;Password=P@ssw0rd123!;TrustServerCertificate=True;
+      - ConnectionStrings__UseInMemory=false
+      - BusSettings__ClusterAddress=amqps://rabbitmq:5672/
+      - BusSettings__UserName=guest
+      - BusSettings__Password=guest
+    depends_on:
+      - rabbitmq
+      - sql-order
+#      - sql-notification

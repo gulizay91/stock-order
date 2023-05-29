@@ -10,10 +10,13 @@ public static class MassTransitRegister
     // ps: normally used configuration, validation and register these stuff, but now lets keep simple
     var clusterAddress = configuration
       .GetSection("BusSettings:ClusterAddress").Value;
+    Console.Out.WriteLine($"BusSettings:ClusterAddress{clusterAddress}");
     var userName = configuration
       .GetSection("BusSettings:UserName").Value;
+    Console.Out.WriteLine($"BusSettings:UserName{userName}");
     var password = configuration
       .GetSection("BusSettings:Password").Value;
+    Console.Out.WriteLine($"BusSettings:Password{password}");
 
     serviceCollection.AddMassTransit(x =>
     {

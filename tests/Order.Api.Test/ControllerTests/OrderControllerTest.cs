@@ -55,7 +55,7 @@ public class OrderControllerTest
     // Assert
     result.StatusCode.Should().Be(201);
     _mockNotificationService.Verify(
-      context => context.PublishOrderNotificationEvent(It.IsAny<OrderNotification>(), It.IsAny<int>()),
+      context => context.PublishOrderNotificationEvent(It.IsAny<OrderNotification>(), It.IsAny<int>(), It.IsAny<int>()),
       Times.Exactly(simpleRequest.OrderNotifications.Count()));
   }
 

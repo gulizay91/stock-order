@@ -26,7 +26,7 @@ public class NotificationServiceTest
     // Arrange
     var simpleOrderNotification = OrderMother.SimpleOrderNotificationSms();
     // Act
-    await _sut.PublishOrderNotificationEvent(simpleOrderNotification, 1);
+    await _sut.PublishOrderNotificationEvent(simpleOrderNotification, 1, 1);
 
     // Assert
     _mockBus.Verify(context => context.Publish(It.IsAny<OrderCreatedSmsEvent>(), It.IsAny<CancellationToken>()),
