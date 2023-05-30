@@ -28,12 +28,17 @@ Order to buy Bitcoin regularly on a certain day of each month
 * Every notification should be logged at the database level. It should be possible to answer the questions of which order was made on which channel, when and with which information letter.
 
 
-## System Design
-![system design](https://github.com/gulizay91/stock-order/blob/main/etc/system-design.png?raw=true)
+### System Design
+[system design](https://miro.com/app/board/uXjVOFq5Lqg=/#tpicker-content)
+![Screenshot](https://github.com/gulizay91/stock-order/blob/main/etc/system-design.png?raw=true)
 
+### Sample Data
 ![sample data order](https://github.com/gulizay91/stock-order/blob/main/etc/ss-sql-1.png?raw=true)
 ![sample data orderNotification](https://github.com/gulizay91/stock-order/blob/main/etc/ss-sql-2.png?raw=true)
+![sample data notification](https://github.com/gulizay91/stock-order/blob/main/etc/ss-sql-3.png?raw=true)
 
+### Api Documentation (Swagger)
+![sample data notification](https://github.com/gulizay91/stock-order/blob/main/etc/api-documentation.png?raw=true)
 
 ### Startup Projects
 * Order.Api
