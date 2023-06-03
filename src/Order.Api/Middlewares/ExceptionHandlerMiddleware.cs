@@ -53,6 +53,7 @@ public class ExceptionHandlerMiddleware
     };
 
     var result = JsonSerializer.Serialize(new ErrorResponse { Message = message });
+    //var result = JsonSerializer.Serialize(new Microsoft.AspNetCore.Mvc.ProblemDetails { Detail = message });
     await httpContext.Response.WriteAsync(result);
   }
 }

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Order.Api.Persistence.Entities;
@@ -57,6 +58,24 @@ public class OrderControllerTest
     _mockNotificationService.Verify(
       context => context.PublishOrderNotificationEvent(It.IsAny<OrderNotification>(), It.IsAny<int>(), It.IsAny<int>()),
       Times.Exactly(simpleRequest.OrderNotifications.Count()));
+  }
+
+  [Fact]
+  public async Task CreateOrder_ShouldReturn409Status()
+  {
+    // Arrange
+    var simpleOrder = OrderMother.SimpleOrder();
+    var simpleRequest = OrderMother.CreateOrderRequestForClient(simpleOrder.ClientId);
+    _mockOrderRepository.Setup(_ => _.InsertOrder(It.IsAny<Persistence.Entities.Order>())).Throws<DbUpdateException>();
+
+    // Act
+    var throwingAction = async () => { await _sut.CreateOrder(simpleRequest); };
+
+    // Assert
+    await Assert.ThrowsAsync<DbUpdateException>(throwingAction);
+    _mockNotificationService.Verify(
+      context => context.PublishOrderNotificationEvent(It.IsAny<OrderNotification>(), It.IsAny<int>(), It.IsAny<int>()),
+      Times.Never);
   }
 
   [Fact]

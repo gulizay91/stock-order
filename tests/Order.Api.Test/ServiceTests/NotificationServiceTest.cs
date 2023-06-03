@@ -21,7 +21,7 @@ public class NotificationServiceTest
   }
 
   [Fact]
-  public async Task CreateOrder_ShouldReturn201Status()
+  public async Task CreateOrder_ShouldPublish_OrderCreatedSmsEvent()
   {
     // Arrange
     var simpleOrderNotification = OrderMother.SimpleOrderNotificationSms();

@@ -89,6 +89,25 @@ public static class OrderMother
     };
   }
 
+  public static CreateOrderRequest CreateOrderRequestForClient(int clientId)
+  {
+    return new CreateOrderRequest
+    {
+      ClientId = clientId,
+      CryptoSymbol = CryptocurrencySymbol.BTC,
+      DayOfMonth = 1,
+      OrderType = OrderType.Buy,
+      Price = 100,
+      OrderNotifications = new List<OrderNotificationModel>
+      {
+        new()
+        {
+          NotificationType = NotificationType.Sms
+        }
+      }
+    };
+  }
+
   public static CreateOrderRequest SimpleBadCreateOrderRequest()
   {
     return new CreateOrderRequest

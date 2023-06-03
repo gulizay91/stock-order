@@ -61,23 +61,26 @@ start docker image mssql
 sudo docker start sqlserver
 ```
 
-if you are using VS or Rider, you can run with docker
-if you're not, open a terminal in your root directory which is 'stock-order/src' and run the following commands:
-	
+## Getting Started
+
+Steps to build a Docker image:
+
+1. Clone this repo
 ```sh
-cd src
-docker-compose build
-docker-compose up
+git clone https://github.com/gulizay91/stock-order.git
 ```
 
-if you want to change ports on docker-compose.yaml
+2. Run docker compose
+
 ```sh
-docker-compose down
-docker-compose build
-docker-compose up
+docker-compose up -d
 ```
-Once done, run the Docker image and map the port to whatever you wish on
-your host.
+
+3. Send health check
+
+```sh
+curl -L -X GET 'http://localhost:5112/health'
+```
 
 You can check data separated db
 
