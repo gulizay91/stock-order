@@ -12,7 +12,7 @@
     container_name: sqlserver-stock-order
     environment:
       MSSQL_USER: "sa"
-      #      MSSQL_DB: "stock-order"
+      MSSQL_DB: "stock-order"
       MSSQL_SA_PASSWORD: "P@ssw0rd123!"
       ACCEPT_EULA: "1"
   sql-notification:
@@ -22,11 +22,12 @@
     container_name: sqlserver-stock-notification
     environment:
       MSSQL_USER: "sa"
-      #      MSSQL_DB: "stock-notification"
+      MSSQL_DB: "stock-notification"
       MSSQL_SA_PASSWORD: "P@ssw0rd123!"
       ACCEPT_EULA: "1"
-  order.api:
-    image: order.api
+  order-api:
+    image: stock-order-api
+    container_name: stock-order-api
     build:
       context: .
       dockerfile: src/Order.Api/Dockerfile
@@ -43,8 +44,9 @@
     depends_on:
       - sql-order
       - rabbitmq
-  notification.consumer:
-    image: notification.consumer
+  notification-consumer:
+    image: stock-order-notification-consumer
+    container_name: stock-order-notification-consumer
     build:
       context: .
       dockerfile: src/Notification.Consumer/Dockerfile
@@ -57,5 +59,4 @@
       - BusSettings__Password=guest
     depends_on:
       - rabbitmq
-      #- sql-order
       - sql-notification
